@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Style Survey</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Discover Your Learning Style</h1>
+        <p>Understanding your learning style can help you become a better student and more productive learner. Let's find out what suits you best!</p>
+    </header>
+
+    <section id="styles">
+        <h2>Types of Learning Styles</h2>
+        <div class="style">
+            <h3>Visual Learners</h3>
+            <p>Visual learners prefer to use pictures, diagrams, and charts to understand concepts.</p>
+        </div>
+        <div class="style">
+            <h3>Auditory Learners</h3>
+            <p>Auditory learners learn best through listening to lectures, discussions, and audio materials.</p>
+        </div>
+        <div class="style">
+            <h3>Kinesthetic Learners</h3>
+            <p>Kinesthetic learners prefer hands-on activities, learning by doing, and engaging physically with materials.</p>
+        </div>
+    </section>
+
+    <section id="survey">
+        <h2>Learning Style Survey</h2>
+        <form id="learningSurvey">
+            <label for="q1">1. Do you prefer reading instructions or listening to someone explain them?</label>
+            <select id="q1" name="q1">
+                <option value="visual">Reading instructions</option>
+                <option value="auditory">Listening to explanations</option>
+                <option value="kinesthetic">Doing it directly without instructions</option>
+            </select>
+
+            <label for="q2">2. When studying, do you prefer to use diagrams or participate in discussions?</label>
+            <select id="q2" name="q2">
+                <option value="visual">Use diagrams</option>
+                <option value="auditory">Participate in discussions</option>
+                <option value="kinesthetic">Engage in hands-on activities</option>
+            </select>
+
+            <label for="q3">3. What helps you remember information better?</label>
+            <select id="q3" name="q3">
+                <option value="visual">Looking at images or reading texts</option>
+                <option value="auditory">Listening to someone explaining it</option>
+                <option value="kinesthetic">Physically engaging with the material</option>
+            </select>
+
+            <button type="button" onclick="calculateResult()">Submit</button>
+        </form>
+    </section>
+
+    <section id="result" style="display:none;">
+        <h2>Your Learning Style</h2>
+        <p id="learningStyle"></p>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
