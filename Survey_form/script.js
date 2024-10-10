@@ -1,32 +1,72 @@
-function calculateResult() {
-    const q1 = document.getElementById('q1').value;
-    const q2 = document.getElementById('q2').value;
-    const q3 = document.getElementById('q3').value;
+const questions = [
+    "Saya lebih suka belajar dengan mendengarkan penjelasan.",
+    "Saya lebih mudah mengingat sesuatu jika melihatnya secara visual.",
+    "Saya suka belajar dengan melakukan aktivitas fisik atau praktek langsung.",
+    "Saya lebih suka berdiskusi dengan teman-teman saat belajar.",
+    "Saya lebih mudah memahami materi jika membaca buku atau catatan.",
+    "Saya suka mendengarkan musik saat belajar.",
+    "Saya lebih suka menggambar atau membuat diagram untuk memahami sesuatu.",
+    "Saya lebih suka belajar di luar ruangan atau sambil bergerak.",
+    "Saya lebih mudah mengingat informasi jika menuliskannya.",
+    "Saya suka bermain peran atau simulasi saat belajar."
+];
 
-    let visualCount = 0;
-    let auditoryCount = 0;
-    let kinestheticCount = 0;
+let currentQuestion = 0;
+let scores = {
+    auditori: 0,
+    visual: 0,
+    kinestetik: 0
+};
 
-    // Counting answers
-    const answers = [q1, q2, q3];
-    answers.forEach(answer => {
-        if (answer === 'visual') visualCount++;
-        if (answer === 'auditory') auditoryCount++;
-        if (answer === 'kinesthetic') kinestheticCount++;
-    });
+function displayQuestion() {
+    document.getElementById('question').textContent = questions[currentQuestion];
+}
 
-    // Determining the result
-    let result = '';
-    if (visualCount >= auditoryCount && visualCount >= kinestheticCount) {
-        result = 'You are a Visual Learner! You learn best through images, diagrams, and reading.';
-    } else if (auditoryCount >= visualCount && auditoryCount >= kinestheticCount) {
-        result = 'You are an Auditory Learner! You learn best by listening to explanations and discussions.';
+function selectOption(option) {
+    const score = 4 - (option - 1);
+    if (currentQuestion % 3 === 0) {
+        scores.auditori += score;
+    } else if (currentQuestion % 3 === 1) {
+        scores.visual += score;
     } else {
-        result = 'You are a Kinesthetic Learner! You learn best through hands-on activities and direct experiences.';
+        scores.kinestetik += score;
+    }
+}
+
+function nextQuestion() {
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+        displayQuestion();
+    } else {
+        showResult();
+    }
+}
+
+function showResult() {
+    const quiz = document.getElementById('quiz');
+    const nextBtn = document.getElementById('nextBtn');
+    const result = document.getElementById('result');
+
+    quiz.style.display = 'none';
+    nextBtn.style.display = 'none';
+
+    const maxScore = Math.max(scores.auditori, scores.visual, scores.kinestetik);
+    let gaya = '';
+
+    if (scores.auditori === maxScore) {
+        gaya += 'Auditori ';
+    }
+    if (scores.visual === maxScore) {
+        gaya += 'Visual ';
+    }
+    if (scores.kinestetik === maxScore) {
+        gaya += 'Kinestetik ';
     }
 
-    // Display result
-    document.getElementById('learningStyle').textContent = result;
-    document.getElementById('result').style.display = 'block';
-    document.getElementById('survey').style.display = 'none';
+    result.innerHTML = `Gaya belajar kamu adalah: <span style="color: #ff6b6b;">${gaya}</span><br>
+                        Skor Auditori: ${scores.auditori}<br>
+                        Skor Visual: ${scores.visual}<br>
+                        Skor Kinestetik: ${scores.kinestetik}`;
 }
+
+displayQuestion();
