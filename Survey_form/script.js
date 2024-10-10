@@ -63,10 +63,10 @@ function showResult() {
         gaya += 'Kinestetik ';
     }
 
-    result.innerHTML = `Gaya belajar kamu adalah: <span style="color: #ff6b6b;">${gaya}</span><br>
+    result.innerHTML = "Gaya belajar kamu adalah: <span style="color: #ff6b6b;">${gaya}</span><br>
                         Skor Auditori: ${scores.auditori}<br>
                         Skor Visual: ${scores.visual}<br>
-                        Skor Kinestetik: ${scores.kinestetik}`;
+                        Skor Kinestetik: ${scores.kinestetik}";
 }
 
 displayQuestion();
