@@ -1,55 +1,83 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     background-image: url("bg_bocah.png");
     background-size: cover;
     background-attachment: fixed;
-    margin: 0;
-    padding: 20px;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    box-sizing: border-box;
 }
+
 .container {
-    background-color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(255, 255, 255, 0.95);
     border-radius: 15px;
-    padding: 20px;
+    padding: 30px;
     max-width: 600px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    max-height: 90vh;
+    overflow-y: auto;
 }
+
 h1 {
     text-align: center;
     color: #ff6b6b;
-}
-.question {
     margin-bottom: 20px;
 }
+
+#intro {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.question {
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    text-align: center;
+}
+
 .options {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
 }
+
 .option {
-    flex: 1;
+    flex: 1 0 40%;
     text-align: center;
     padding: 10px;
-    margin: 0 5px;
     background-color: #4ecdc4;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
 }
+
 .option:hover {
     background-color: #45b7aa;
+    transform: translateY(-2px);
 }
+
 #result {
     text-align: center;
     font-weight: bold;
     margin-top: 20px;
     font-size: 1.2em;
 }
-#nextBtn {
+
+#nextBtn, #startBtn {
     display: block;
     margin: 20px auto;
     padding: 10px 20px;
@@ -59,7 +87,77 @@ h1 {
     border-radius: 5px;
     cursor: pointer;
     font-size: 1em;
+    transition: background-color 0.3s;
 }
-#nextBtn:hover {
+
+#nextBtn:hover, #startBtn:hover {
     background-color: #ff5252;
+}
+
+.option.selected {
+    background-color: #ffcc00;
+    animation: highlight 0.5s ease;
+    transform: scale(1.05);
+}
+
+@keyframes highlight {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1.05); }
+}
+
+#progress {
+    text-align: center;
+    margin-top: 20px;
+    font-style: italic;
+}
+
+#feedbackForm {
+    margin-top: 30px;
+}
+
+#feedbackForm input, #feedbackForm textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#feedbackForm button {
+    background-color: #4ecdc4;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#feedbackForm button:hover {
+    background-color: #45b7aa;
+}
+
+#submissionResult {
+    margin-top: 10px;
+    text-align: center;
+    color: #4ecdc4;
+}
+
+#chartContainer {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+}
+
+@media (max-width: 480px) {
+    .option {
+        flex: 1 0 100%;
+    }
+    
+    .container {
+        width: 95%;
+        padding: 20px;
+    }
 }
