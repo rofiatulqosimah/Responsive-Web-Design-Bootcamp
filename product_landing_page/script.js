@@ -1,143 +1,124 @@
-// Product Data
-const products = [
-    {
-        name: "Classic Oxford",
-        price: 595,
-        image: "Oxfordshoes.jpg",
-        category: "Classic"
-    },
-    {
-        name: "Modern Loafer",
-        price: 495,
-        image: "Loafershoes.jpg",
-        category: "Modern"
-    },
-    {
-        name: "Elegant Derby",
-        price: 545,
-        image: "Derbyshoes.jpg",
-        category: "Classic"
-    },
-    {
-        name: "Urban Sneaker",
-        price: 445,
-        image: "Sneakershoes.jpg",
-        category: "Modern"
-    }
-];
-
 let cart = [];
-let currentProduct = null;
+let cartCount = 0;
+let totalPrice = 0;
 
-// Load Products
-function loadProducts() {
-    const productGrid = document.getElementById('productGrid');
-    productGrid.innerHTML = ''; // Clear existing products
-    
-    products.forEach(product => {
-        const productHTML = `
-            <div class="col-md-3">
-                <div class="product-card" onclick="showPurchaseForm(${JSON.stringify(product).replace(/"/g, '&quot;')})">
-                    <img src="${product.image}" alt="${product.name}" class="product-image">
-                    <h3 class="product-title">${product.name}</h3>
-                    <p class="product-price">$${product.price}</p>
-                    <div class="product-actions">
-                        <button class="btn btn-light w-100" onclick="event.stopPropagation(); addToCart(${JSON.stringify(product).replace(/"/g, '&quot;')})">
-                            Add to Cart
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-        productGrid.innerHTML += productHTML;
-    });
-}
-
-// Cart Functions
-function toggleCart() {
-    const cartSidebar = document.getElementById('cartSidebar');
-    cartSidebar.classList.toggle('active');
-}
-
-function addToCart(product) {
-    cart.push(product);
-    updateCart();
-}
-
-function removeFromCart(index) {
-    cart.splice(index, 1);
-    updateCart();
-}
-
-function updateCart() {
-    const cartItems = document.getElementById('cartItems');
-    const cartTotal = document.getElementById('cartTotal');
-    const cartCount = document.getElementById('cartCount');
-    const cartCountMobile = document.getElementById('cartCountMobile');
-    
-    cartItems.innerHTML = '';
-    let total = 0;
-
-    cart.forEach((item, index) => {
-        total += item.price;
-        cartItems.innerHTML += `
-            <div class="cart-item">
-                <img src="${item.image}" alt="${item.name}">
-                <div class="cart-item-details">
-                    <h4>${item.name}</h4>
-                    <p class="cart-item-price">$${item.price}</p>
-                </div>
-                <i class="fas fa-trash remove-item" onclick="removeFromCart(${index})"></i>
-            </div>
-        `;
-    });
-
-    cartTotal.textContent = `$${total}`;
-    cartCount.textContent = cart.length;
-    cartCountMobile.textContent = cart.length;
-}
-
-function showPurchaseForm(product) {
-    currentProduct = product;
-    const purchaseModal = new bootstrap.Modal(document.getElementById('purchaseModal'));
-    purchaseModal.show();
-}
-
-function submitPurchase() {
-    alert('Thank you for your purchase! We will process your order shortly.');
-    const purchaseModal = bootstrap.Modal.getInstance(document.getElementById('purchaseModal'));
-    purchaseModal.hide();
-}
-
-function checkout() {
-    if (cart.length === 0) {
-        alert('Your cart is empty!');
-        return;
-    }
-    showPurchaseForm(cart[0]); // Show form for first item (you might want to handle multiple items differently)
-}
-
-// Custom Cursor
-document.addEventListener('mousemove', (e) => {
-    const cursor = document.querySelector('.custom-cursor');
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-});
-
-// Navbar Scroll Effect
-window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.style.padding = '10px 0';
-        navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+function addToCart(productName, price) {
+    const product = cart.find(item => item.name === productName);
+    if (product) {
+        product.quantity += 1;
     } else {
-        navbar.style.padding = '20px 0';
-        navbar.style.boxShadow = 'none';
+        cart.push({ name: productName, price: price, quantity: 1 });
     }
+    cartCount += 1;
+    totalPrice += price;
+    updateCartDisplay();
+}
+
+function removeFromCart(productName) {
+    const product = cart.find(item => item.name === productName);
+    if (product) {
+        cartCount -= product.quantity;
+        totalPrice -= product.price * product.quantity;
+        cart = cart.filter(item => item.name !== productName);
+    }
+    updateCartDisplay();
+}
+
+function updateCartDisplay() {
+    document.getElementById("cart-count").innerText = cartCount;
+    document.getElementById("total-price").innerText = totalPrice;
+    const cartItems = document.getElementById("cart-items");
+    cartItems.innerHTML = '';
+    cart.forEach(item => {
+        cartItems.innerHTML += `<li>${item.name} x${item.quantity} - Rp ${item.price * item.quantity} 
+        <button onclick="removeFromCart('${item.name}')">Remove</button></li>`;
+    });
+}
+
+function toggleCartModal() {
+    const modal = document.getElementById("cart-modal");
+    modal.style.display = modal.style.display === "flex" ? "none" : "flex";
+}
+
+function openCheckoutForm() {
+    toggleCartModal();
+    toggleCheckoutModal();
+}
+
+function toggleCheckoutModal() {
+    const modal = document.getElementById("checkout-modal");
+    modal.style.display = modal.style.display === "flex" ? "none" : "flex";
+}
+
+function confirmOrder(event) {
+    event.preventDefault();
+    alert("Pesanan Anda telah dikonfirmasi!");
+    resetCart();
+}
+
+function resetCart() {
+    cart = [];
+    cartCount = 0;
+    totalPrice = 0;
+    updateCartDisplay();
+    toggleCheckoutModal();
+}
+
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    alert('Terima kasih! Pesan Anda telah terkirim.');
+    this.reset();
 });
 
-// Initialize
-document.addEventListener('DOMContentLoaded', () => {
-    loadProducts();
-    updateCart();
+// Fungsi untuk A/B testing
+function abTest() {
+    const variant = Math.random() < 0.5 ? 'A' : 'B';
+    if (variant === 'A') {
+        document.querySelector('.cta-button').style.backgroundColor = '#FF4444';
+    } else {
+        document.querySelector('.cta-button').style.backgroundColor = '#4CAF50';
+    }
+    // Kirim data varian ke Google Analytics
+    gtag('event', 'ab_test', {
+        'event_category': 'experiment',
+        'event_label': 'CTA Button Color',
+        'value': variant
+    });
+}
+
+// Panggil fungsi A/B testing saat halaman dimuat
+window.addEventListener('load', abTest);
+
+// Tambahkan fungsi ini ke file JavaScript yang sudah ada
+
+document.getElementById('newsletter-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    alert('Terima kasih telah berlangganan!');
+    this.reset();
 });
+
+// Fungsi untuk animasi scroll halus
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+
+// Fungsi untuk animasi fade-in elemen saat di-scroll
+function fadeInOnScroll() {
+    const elements = document.querySelectorAll('.fade-in');
+    elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementBottom = element.getBoundingClientRect().bottom;
+        if (elementTop < window.innerHeight && elementBottom > 0) {
+            element.classList.add('visible');
+        }
+    });
+}
+
+window.addEventListener('scroll', fadeInOnScroll);
+window.addEventListener('load', fadeInOnScroll);
