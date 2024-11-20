@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Cash Register</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>💰 Professional Cash Register</h1>
+        
+        <div class="register-section">
+            <div class="info-box">
+                <span>Price: $<span id="price-display">19.5</span></span>
+            </div>
+
+            <div class="input-group">
+                <label for="cash">Customer Cash:</label>
+                <input type="number" id="cash" placeholder="Enter cash amount" step="0.01" min="0">
+                <button id="purchase-btn">Complete Purchase</button>
+            </div>
+
+            <div id="change-due"></div>
+
+            <div class="drawer-status">
+                <h3>Cash Drawer Status</h3>
+                <div class="currency-grid" id="drawer-display"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
