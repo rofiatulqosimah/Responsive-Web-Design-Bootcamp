@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Machine: Roman Numeral Converter</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="time-machine">
+            <h1>⌛ Time Machine ⌛</h1>
+            <h2>Modern to Roman Numeral Converter</h2>
+            
+            <div class="control-panel">
+                <div class="input-group">
+                    <label for="number">Enter Year (1-3999):</label>
+                    <input type="number" 
+                           id="number" 
+                           placeholder="Enter a number..."
+                           min="1"
+                           max="3999">
+                </div>
+                
+                <button id="convert-btn">
+                    <span class="button-text">Travel Through Time</span>
+                    <span class="button-icon">🕰️</span>
+                </button>
+            </div>
+
+            <div class="display-panel">
+                <div id="output" class="output-screen"></div>
+            </div>
+
+            <div class="reference-panel">
+                <h3>Time Traveler's Guide</h3>
+                <div class="guide-grid">
+                    <div class="guide-item">M = 1000</div>
+                    <div class="guide-item">D = 500</div>
+                    <div class="guide-item">C = 100</div>
+                    <div class="guide-item">L = 50</div>
+                    <div class="guide-item">X = 10</div>
+                    <div class="guide-item">V = 5</div>
+                    <div class="guide-item">I = 1</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
