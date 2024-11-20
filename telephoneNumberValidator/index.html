@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Phone Validator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1><i class="fas fa-phone-alt"></i> Phone Number Validator</h1>
+            <p class="subtitle">Validate US phone numbers in various formats</p>
+            
+            <div class="input-group">
+                <input type="text" id="user-input" placeholder="Enter phone number...">
+                <div class="buttons">
+                    <button id="check-btn">
+                        <i class="fas fa-check"></i> Validate
+                    </button>
+                    <button id="clear-btn">
+                        <i class="fas fa-trash"></i> Clear
+                    </button>
+                </div>
+            </div>
+
+            <div class="format-examples">
+                <h3>Valid Format Examples:</h3>
+                <ul>
+                    <li>1 555-555-5555</li>
+                    <li>1 (555) 555-5555</li>
+                    <li>5555555555</li>
+                    <li>555-555-5555</li>
+                    <li>(555)555-5555</li>
+                </ul>
+            </div>
+
+            <div id="results-div" class="results"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
